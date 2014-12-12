@@ -10,6 +10,7 @@
 
 @interface BLCWebBrowserViewController : UIViewController
 
+-(void) resetWebView;
 
 @end
 
