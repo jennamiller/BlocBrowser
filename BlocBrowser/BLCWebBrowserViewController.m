@@ -22,6 +22,7 @@
 @property (nonatomic, strong) BLCAwesomeFloatingToolbar *awesomeToolbar;
 @property (nonatomic, assign) NSUInteger frameCount;
 
+
 @end
 
 @implementation BLCWebBrowserViewController
@@ -43,16 +44,13 @@
     self.textField.backgroundColor = [UIColor colorWithWhite:220/255.0f alpha:1];
     self.textField.delegate = self;
     
-    self.awesomeToolbar = [[BLCAwesomeFloatingToolbar alloc] initWithFourTitles:@[kBLCWebBrowserBackString, kBLCWebBrowserForwardString, kBLCWebBrowserStopString, kBLCWebBrowserRefreshString]];
+   // self.awesomeToolbar = [[BLCAwesomeFloatingToolbar alloc] initWithFourButtons:(NSMutableArray *)allTheButtons;
     self.awesomeToolbar.delegate = self;
-
+   
     
     [mainView addSubview:self.webView];
     [mainView addSubview:self.textField];
     [mainView addSubview:self.awesomeToolbar];
-    
-    for (UIView *viewToAdd in @[self.webView, self.textField, self.awesomeToolbar]); {
-    }
     
     self.view = mainView;
 }
@@ -184,6 +182,17 @@ self.frameCount--;
         [self.webView stopLoading];
     } else if ([title isEqual:kBLCWebBrowserRefreshString]) {
         [self.webView reload];
+    }
+}
+
+- (void) floatingToolbar:(BLCAwesomeFloatingToolbar *)toolbar didTryToPanWithOffset:(CGPoint)offset {
+    CGPoint startingPoint = toolbar.frame.origin;
+    CGPoint newPoint = CGPointMake(startingPoint.x + offset.x, startingPoint.y + offset.y);
+    
+    CGRect potentialNewFrame = CGRectMake(newPoint.x, newPoint.y, CGRectGetWidth(toolbar.frame), CGRectGetHeight(toolbar.frame));
+    
+    if (CGRectContainsRect(self.view.bounds, potentialNewFrame)) {
+        toolbar.frame = potentialNewFrame;
     }
 }
 
