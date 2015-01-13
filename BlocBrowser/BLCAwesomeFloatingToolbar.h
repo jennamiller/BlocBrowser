@@ -12,22 +12,24 @@
 
 @protocol BLCAwesomeFloatingToolbarDelegate <NSObject>
 
+// @property (readwrite, copy) NSMutableArray *allTheButtons;
+
 @optional
 
 - (void) floatingToolbar:(BLCAwesomeFloatingToolbar *)toolbar didSelectButtonWithTitle:(NSString *)title;
-
+- (void) floatingToolbar:(BLCAwesomeFloatingToolbar *)toolbar didTryToPanWithOffset:(CGPoint)offset;
+- (void) floatingToolbar:(BLCAwesomeFloatingToolbar *)toolbar didTryToResize:(CGPoint)scale;
+                                                                   
 @end
 
 @interface BLCAwesomeFloatingToolbar : UIView
 
-- (instancetype) initWithFourTitles:(NSArray *)titles;
+- (instancetype) initWithFourButtons:(NSMutableArray *)buttons;
 
 - (void) setEnabled:(BOOL)enabled forButtonWithTitle:(NSString *)title;
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
 
+@property (nonatomic, strong) NSMutableArray *allTheButtons;
 @property (nonatomic, weak) id <BLCAwesomeFloatingToolbarDelegate> delegate;
+
 
 @end
