@@ -34,7 +34,7 @@
 
 - (instancetype) initWithFourButtons :(NSMutableArray *)allTheButtons {
 
-self = [super init];
+[self super init];
     
     if (self) {
         
